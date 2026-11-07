@@ -1,0 +1,23 @@
+[Unit]
+Description=Digital Equb Ethiopia Gunicorn Application Server
+After=network.target postgresql.service
+
+[Service]
+User=amanuel
+Group=amanuel
+WorkingDirectory=/home/amanuel/Equb/backend
+Environment="PATH=/home/amanuel/Equb/.venv/bin:/usr/bin"
+Environment="DJANGO_SETTINGS_MODULE=equb_core.settings"
+ExecStart=/home/amanuel/Equb/.venv/bin/gunicorn --config /home/amanuel/Equb/deployment/gunicorn.conf.py equb_core.wsgi:application
+
+Restart=always
+RestartSec=5
+StandardOutput=append:/home/amanuel/Equb/logs/service.log
+StandardError=append:/home/amanuel/Equb/logs/service_err.log
+
+# Security Sandboxing
+NoNewPrivileges=true
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target

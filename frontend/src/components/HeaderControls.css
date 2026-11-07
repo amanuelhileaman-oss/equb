@@ -1,0 +1,236 @@
+/* Digital Equb Ethiopia — Header Controls (Theme & 4-Language Dropdowns) */
+
+.header-controls-wrap {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  position: relative;
+}
+
+.header-control-dropdown-container {
+  position: relative;
+}
+
+.header-control-trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: inherit;
+  padding: 0.45rem 0.75rem;
+  border-radius: 8px;
+  font-size: 0.825rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  user-select: none;
+}
+
+/* Light theme triggers */
+[data-theme="light"] .header-control-trigger,
+.light .header-control-trigger {
+  background: #ffffff;
+  border-color: #e2e8f0;
+  color: #1e293b;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+[data-theme="light"] .header-control-trigger:hover,
+.light .header-control-trigger:hover {
+  background: #f8fafc;
+  border-color: #cbd5e1;
+}
+
+/* Dark theme triggers */
+[data-theme="dark"] .header-control-trigger,
+.dark .header-control-trigger {
+  background: #1e293b;
+  border-color: #334155;
+  color: #f1f5f9;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+[data-theme="dark"] .header-control-trigger:hover,
+.dark .header-control-trigger:hover {
+  background: #334155;
+  border-color: #475569;
+}
+
+.control-label {
+  font-size: 0.825rem;
+  font-weight: 600;
+}
+
+.control-chevron {
+  opacity: 0.6;
+  transition: transform 0.2s ease;
+}
+
+.control-chevron.open {
+  transform: rotate(180deg);
+}
+
+/* Icons */
+.theme-icon-sun {
+  color: #f59e0b;
+}
+
+.theme-icon-moon {
+  color: #818cf8;
+}
+
+.theme-icon-system {
+  color: #10b981;
+}
+
+.lang-flag {
+  font-size: 0.95rem;
+  line-height: 1;
+}
+
+/* Dropdown Menu */
+.header-control-menu {
+  position: absolute;
+  top: calc(100% + 6px);
+  right: 0;
+  min-width: 175px;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+  padding: 0.35rem;
+  z-index: 1000;
+  transform-origin: top right;
+}
+
+[data-theme="dark"] .header-control-menu,
+.dark .header-control-menu {
+  background: #1e293b;
+  border-color: #334155;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5), 0 8px 10px -6px rgba(0, 0, 0, 0.3);
+}
+
+.header-control-menu-header {
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 0.35rem 0.6rem 0.25rem 0.6rem;
+  color: #94a3b8;
+  border-bottom: 1px solid rgba(148, 163, 184, 0.15);
+  margin-bottom: 0.25rem;
+}
+
+.header-control-menu-item {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.5rem 0.65rem;
+  border: none;
+  background: transparent;
+  color: #334155;
+  border-radius: 6px;
+  font-size: 0.825rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  text-align: left;
+}
+
+[data-theme="dark"] .header-control-menu-item,
+.dark .header-control-menu-item {
+  color: #e2e8f0;
+}
+
+.header-control-menu-item:hover {
+  background: #f1f5f9;
+  color: #0f172a;
+}
+
+[data-theme="dark"] .header-control-menu-item:hover,
+.dark .header-control-menu-item:hover {
+  background: #334155;
+  color: #ffffff;
+}
+
+.header-control-menu-item.active {
+  background: #eff6ff;
+  color: #2563eb;
+  font-weight: 600;
+}
+
+[data-theme="dark"] .header-control-menu-item.active,
+.dark .header-control-menu-item.active {
+  background: rgba(37, 99, 235, 0.2);
+  color: #60a5fa;
+}
+
+.menu-item-left {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.menu-item-check {
+  color: #2563eb;
+  flex-shrink: 0;
+}
+
+[data-theme="dark"] .menu-item-check,
+.dark .menu-item-check {
+  color: #60a5fa;
+}
+
+.lang-names {
+  display: flex;
+  flex-direction: column;
+}
+
+.lang-native {
+  font-size: 0.825rem;
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+.lang-english {
+  font-size: 0.7rem;
+  color: #64748b;
+  line-height: 1;
+}
+
+[data-theme="dark"] .lang-english,
+.dark .lang-english {
+  color: #94a3b8;
+}
+
+/* Animations */
+.animate-pop-in {
+  animation: popIn 0.18s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes popIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95) translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+/* Responsive adjustments */
+@media (max-width: 640px) {
+  .header-control-trigger .control-label {
+    display: none;
+  }
+  .header-control-trigger {
+    padding: 0.45rem 0.55rem;
+  }
+  .header-control-menu {
+    right: -10px;
+  }
+}
+
