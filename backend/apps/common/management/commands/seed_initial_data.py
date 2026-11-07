@@ -39,6 +39,24 @@ class Command(BaseCommand):
 
         self.stdout.write("4. Seeding user accounts...")
         # Super Admin
+        aman_admin, _ = User.objects.get_or_create(
+            email="aman@gmail.com",
+            defaults={
+                "full_name": "AMANUEL HAILIE",
+                "is_platform_admin": True,
+                "is_staff": True,
+                "is_superuser": True,
+                "is_email_verified": True,
+                "account_status": User.AccountStatus.ACTIVE,
+                "preferred_language": "en"
+            }
+        )
+        aman_admin.is_platform_admin = True
+        aman_admin.is_staff = True
+        aman_admin.is_superuser = True
+        aman_admin.set_password("amanuel1221")
+        aman_admin.save()
+
         super_admin, _ = User.objects.get_or_create(
             email="superadmin@digitalequb.et",
             defaults={

@@ -37,7 +37,7 @@ services:
       - key: FRONTEND_BASE_URL
         value: "https://equb-frontend.onrender.com"
       - key: BACKEND_BASE_URL
-        value: "https://equb-backend.onrender.com"
+        value: "https://equb-backend-r9lc.onrender.com"
 
   # ============================================================================
   # 2. VITE REACT FRONTEND STATIC SITE
@@ -54,7 +54,7 @@ services:
         destination: "/index.html"
     envVars:
       - key: VITE_API_URL
-        value: "https://equb-backend.onrender.com"
+        value: "https://equb-backend-r9lc.onrender.com"
 
 databases:
   # ============================================================================
