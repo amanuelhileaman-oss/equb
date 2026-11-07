@@ -46,7 +46,6 @@ services:
     name: equb-frontend
     runtime: static
     plan: free
-    region: frankfurt
     rootDir: frontend
     buildCommand: "npm install && npm run build"
     staticPublishPath: "./dist"
@@ -67,3 +66,4 @@ databases:
     user: equb_admin
     region: frankfurt
     plan: free
+
