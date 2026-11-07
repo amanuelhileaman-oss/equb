@@ -7,7 +7,7 @@ from pathlib import Path
 BASE_DIR = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(BASE_DIR))
 
-# Load .env file automatically if present
+# Load .env file automatically if present (root .env takes precedence)
 def _load_env():
     for env_path in [BASE_DIR / '.env', BASE_DIR.parent / '.env']:
         if env_path.exists():
@@ -16,7 +16,7 @@ def _load_env():
                     line = line.strip()
                     if line and not line.startswith('#') and '=' in line:
                         k, v = line.split('=', 1)
-                        os.environ.setdefault(k.strip(), v.strip().strip("'\""))
+                        os.environ[k.strip()] = v.strip().strip("'\"")
 
 _load_env()
 
