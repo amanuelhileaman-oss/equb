@@ -42,10 +42,8 @@ services:
   # ============================================================================
   # 2. VITE REACT FRONTEND STATIC SITE
   # ============================================================================
-  - type: web
+  - type: static_site
     name: equb-frontend
-    runtime: static
-    plan: free
     rootDir: frontend
     buildCommand: "npm install && npm run build"
     staticPublishPath: "./dist"
