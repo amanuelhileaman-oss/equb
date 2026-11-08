@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo, useRef } from 'react';
 import { api } from '../services/api';
 import { useLanguage } from '../context/LanguageContext';
 import { useAuth } from '../context/AuthContext';
@@ -80,6 +80,23 @@ export function SuperAdminDashboard() {
   const [successMessage, setSuccessMessage] = useState('');
   const [globalSearch, setGlobalSearch] = useState('');
   const [profileDropdownOpen, setProfileDropdownOpen] = useState(false);
+  const profileDropdownRef = useRef(null);
+
+  useEffect(() => {
+    function handleClickOutside(e) {
+      if (profileDropdownRef.current && !profileDropdownRef.current.contains(e.target)) {
+        setProfileDropdownOpen(false);
+      }
+    }
+    if (profileDropdownOpen) {
+      document.addEventListener('mousedown', handleClickOutside);
+      document.addEventListener('touchstart', handleClickOutside);
+    }
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener('touchstart', handleClickOutside);
+    };
+  }, [profileDropdownOpen]);
   const [refreshing, setRefreshing] = useState(false);
 
   const handleRefreshAll = async () => {
@@ -1149,7 +1166,7 @@ export function SuperAdminDashboard() {
             <HeaderControls />
 
             {/* Super Admin Profile Pill */}
-            <div className="admin-profile-pill" onClick={() => setProfileDropdownOpen(!profileDropdownOpen)}>
+            <div className="admin-profile-pill" ref={profileDropdownRef} onClick={() => setProfileDropdownOpen(!profileDropdownOpen)}>
               <div className="admin-avatar" style={{ overflow: 'hidden' }}>
                 {user?.avatar ? (
                   <img src={user.avatar} alt="Avatar" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />

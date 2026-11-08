@@ -295,7 +295,8 @@
   padding: 0 1.5rem;
   position: sticky;
   top: 0;
-  z-index: 40;
+  z-index: 100 !important;
+  overflow: visible !important;
   transition: background-color 0.25s ease, border-color 0.25s ease;
 }
 
@@ -523,8 +524,9 @@
   border-radius: var(--org-radius-md);
   box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.15);
   width: 220px;
+  max-width: 85vw;
   padding: 0.5rem 0;
-  z-index: 60;
+  z-index: 10001 !important;
 }
 
 .org-dropdown-item {
@@ -1409,10 +1411,30 @@
 
 @media (max-width: 768px) {
   .org-topbar {
-    padding: 0 0.85rem;
+    padding: 0 0.65rem;
+    height: 56px;
+    min-height: 56px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: nowrap;
+    gap: 0.35rem;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    overflow: visible !important;
+    z-index: 100 !important;
   }
   .org-topbar-left {
     gap: 0.5rem;
+  }
+  .org-topbar-right {
+    gap: 0.35rem;
+    flex-wrap: nowrap;
+    flex-shrink: 0;
+    min-width: 0;
+    overflow: visible !important;
+    position: relative;
   }
   .org-user-name,
   .org-user-role {

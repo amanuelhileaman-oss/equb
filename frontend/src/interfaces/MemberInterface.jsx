@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { api } from '../services/api';
 import { useAuth } from '../context/AuthContext';
 import { useLanguage } from '../context/LanguageContext';
@@ -54,6 +54,25 @@ export function MemberInterface() {
   // Active navigation tab
   const [activeTab, setActiveTab] = useState('home'); // 'home' | 'groups' | 'contributions' | 'payments' | 'payouts' | 'announcements' | 'disputes' | 'notifications' | 'profile' | 'help'
   const [mobileDrawerOpen, setMobileDrawerOpen] = useState(false);
+  const [profileDropdownOpen, setProfileDropdownOpen] = useState(false);
+  const profileDropdownRef = useRef(null);
+
+  useEffect(() => {
+    function handleClickOutside(e) {
+      if (profileDropdownRef.current && !profileDropdownRef.current.contains(e.target)) {
+        setProfileDropdownOpen(false);
+      }
+    }
+    if (profileDropdownOpen) {
+      document.addEventListener('mousedown', handleClickOutside);
+      document.addEventListener('touchstart', handleClickOutside);
+    }
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener('touchstart', handleClickOutside);
+    };
+  }, [profileDropdownOpen]);
+
   const [refreshing, setRefreshing] = useState(false);
   const [memberAgreements, setMemberAgreements] = useState([]);
   const [respondingAgreementId, setRespondingAgreementId] = useState(null);
@@ -598,8 +617,14 @@ export function MemberInterface() {
             {/* Theme & 4-Language Dropdowns */}
             <HeaderControls />
 
-            {/* User Profile */}
-            <div className="member-user-profile" onClick={() => { setActiveTab('profile'); setMobileDrawerOpen(false); }} title={displayName}>
+            {/* User Profile Dropdown */}
+            <div
+              className="member-user-profile"
+              ref={profileDropdownRef}
+              onClick={() => setProfileDropdownOpen(!profileDropdownOpen)}
+              title={displayName}
+              style={{ position: 'relative' }}
+            >
               <div className="member-avatar" style={{ overflow: 'hidden' }}>
                 {user?.avatar ? (
                   <img src={user.avatar} alt="Avatar" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
@@ -609,8 +634,40 @@ export function MemberInterface() {
               </div>
               <div className="member-user-info">
                 <span className="member-user-name">{displayName}</span>
-                <span className="member-user-role">{t('roleMember') || 'Member'}</span>
+                <span className="member-user-role">{t('roleMember') || 'Member'} ▾</span>
               </div>
+
+              {profileDropdownOpen && (
+                <div className="member-profile-dropdown" onClick={(e) => e.stopPropagation()}>
+                  <div style={{ padding: '0.45rem 0.75rem', borderBottom: '1px solid var(--mem-border, #e2e8f0)', fontSize: '0.75rem', color: 'var(--mem-text-muted, #64748b)' }}>
+                    Signed in as <strong>{user?.email || displayName}</strong>
+                  </div>
+                  <button
+                    type="button"
+                    className="member-profile-item"
+                    onClick={() => { setActiveTab('profile'); setProfileDropdownOpen(false); setMobileDrawerOpen(false); }}
+                  >
+                    <Settings size={16} />
+                    <span>{t('memNavProfileSettings') || 'Profile & Settings'}</span>
+                  </button>
+                  <button
+                    type="button"
+                    className="member-profile-item"
+                    onClick={() => { setActiveTab('help'); setProfileDropdownOpen(false); setMobileDrawerOpen(false); }}
+                  >
+                    <Headphones size={16} />
+                    <span>{t('memNavHelpSupport') || 'Help & Support'}</span>
+                  </button>
+                  <button
+                    type="button"
+                    className="member-profile-item danger"
+                    onClick={() => { logout(); setProfileDropdownOpen(false); }}
+                  >
+                    <LogOut size={16} />
+                    <span>{t('authLogout') || 'Logout'}</span>
+                  </button>
+                </div>
+              )}
             </div>
 
             {/* Logout Button */}

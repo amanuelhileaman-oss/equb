@@ -98,9 +98,9 @@
   background: #ffffff;
   border: 1px solid #e2e8f0;
   border-radius: 10px;
-  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.2), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
   padding: 0.35rem;
-  z-index: 1000;
+  z-index: 10001 !important;
   transform-origin: top right;
 }
 
@@ -225,6 +225,7 @@
 @media (max-width: 640px) {
   .header-controls-wrap {
     gap: 0.25rem;
+    overflow: visible !important;
   }
   .header-control-trigger .control-label {
     display: none;
@@ -234,8 +235,12 @@
     font-size: 0.75rem;
   }
   .header-control-menu {
-    right: 0;
-    max-width: 90vw;
+    top: calc(100% + 8px) !important;
+    right: 0 !important;
+    min-width: 165px !important;
+    max-width: 85vw !important;
+    z-index: 10001 !important;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4) !important;
   }
 }
 

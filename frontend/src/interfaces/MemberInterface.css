@@ -219,7 +219,8 @@
   justify-content: space-between;
   position: sticky;
   top: 0;
-  z-index: 40;
+  z-index: 100 !important;
+  overflow: visible !important;
 }
 
 .member-search-box {
@@ -940,7 +941,8 @@
     width: 100%;
     max-width: 100%;
     box-sizing: border-box;
-    overflow-x: hidden;
+    overflow: visible !important;
+    z-index: 100 !important;
   }
 
   .member-search-box {
@@ -953,6 +955,8 @@
     gap: 0.35rem;
     flex-shrink: 0;
     min-width: 0;
+    overflow: visible !important;
+    position: relative;
   }
 
   .member-refresh-text {
@@ -1217,6 +1221,75 @@
 [data-theme="dark"] .member-hero-sub,
 .dark .member-hero-sub {
   color: #94a3b8 !important;
+}
+
+/* Member Profile Dropdown */
+.member-profile-dropdown {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  margin-top: 0.5rem;
+  background-color: var(--mem-card-bg, #ffffff);
+  border: 1px solid var(--mem-border);
+  border-radius: 10px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
+  width: 210px;
+  max-width: 85vw;
+  padding: 0.5rem;
+  z-index: 10001 !important;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+[data-theme="dark"] .member-profile-dropdown,
+.dark .member-profile-dropdown {
+  background-color: #1e293b;
+  border-color: #334155;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6);
+}
+
+.member-profile-item {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  padding: 0.55rem 0.75rem;
+  background: transparent;
+  border: none;
+  border-radius: 6px;
+  color: var(--mem-text-main);
+  font-size: 0.85rem;
+  font-weight: 500;
+  cursor: pointer;
+  width: 100%;
+  text-align: left;
+  transition: all 0.15s ease;
+}
+
+.member-profile-item:hover {
+  background-color: rgba(37, 99, 235, 0.08);
+  color: var(--mem-primary);
+}
+
+.member-profile-item.danger {
+  color: #ef4444;
+}
+
+.member-profile-item.danger:hover {
+  background-color: #fef2f2;
+  color: #dc2626;
+}
+
+[data-theme="dark"] .member-profile-item:hover,
+.dark .member-profile-item:hover {
+  background-color: #334155;
+  color: #60a5fa;
+}
+
+[data-theme="dark"] .member-profile-item.danger:hover,
+.dark .member-profile-item.danger:hover {
+  background-color: rgba(239, 68, 68, 0.2);
+  color: #f87171;
 }
 
 /* Tab & Card Animations */

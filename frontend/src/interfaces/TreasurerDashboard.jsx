@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { api } from '../services/api';
 import { useAuth } from '../context/AuthContext';
 import { useLanguage } from '../context/LanguageContext';
@@ -48,6 +48,24 @@ export function TreasurerDashboard() {
   const [activeTab, setActiveTab] = useState('dashboard');
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [profileMenuOpen, setProfileMenuOpen] = useState(false);
+  const profileRef = useRef(null);
+
+  useEffect(() => {
+    function handleClickOutside(e) {
+      if (profileRef.current && !profileRef.current.contains(e.target)) {
+        setProfileMenuOpen(false);
+      }
+    }
+    if (profileMenuOpen) {
+      document.addEventListener('mousedown', handleClickOutside);
+      document.addEventListener('touchstart', handleClickOutside);
+    }
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener('touchstart', handleClickOutside);
+    };
+  }, [profileMenuOpen]);
+
   const [selectedGroupId, setSelectedGroupId] = useState('');
   const [dateFilter, setDateFilter] = useState('30');
   const [searchTerm, setSearchTerm] = useState('');
@@ -723,7 +741,7 @@ export function TreasurerDashboard() {
               }}
             >
               <RefreshCw size={15} className={refreshing ? 'tre-spin' : ''} />
-              <span>{refreshing ? 'Syncing...' : 'Refresh'}</span>
+              <span className="tre-refresh-text">{refreshing ? 'Syncing...' : 'Refresh'}</span>
             </button>
 
             <div className="tre-search-box">
@@ -762,6 +780,7 @@ export function TreasurerDashboard() {
             {/* User Profile Dropdown */}
             <div
               className="tre-user-profile"
+              ref={profileRef}
               onClick={() => setProfileMenuOpen(!profileMenuOpen)}
             >
               <div className="tre-user-avatar" style={{ overflow: 'hidden' }}>
@@ -777,7 +796,7 @@ export function TreasurerDashboard() {
               </div>
 
               {profileMenuOpen && (
-                <div className="tre-profile-menu">
+                <div className="tre-profile-menu" onClick={(e) => e.stopPropagation()}>
                   <div style={{ padding: '0.4rem 0.75rem', borderBottom: '1px solid #f1f5f9', fontSize: '0.75rem', color: '#64748b' }}>
                     Signed in as <strong>{user?.email || 'Treasurer'}</strong>
                   </div>

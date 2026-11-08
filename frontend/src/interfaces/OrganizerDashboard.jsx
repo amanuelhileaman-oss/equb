@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { api } from '../services/api';
 import { useAuth } from '../context/AuthContext';
 import { useLanguage } from '../context/LanguageContext';
@@ -124,6 +124,23 @@ export function OrganizerDashboard() {
   });
   const [refreshing, setRefreshing] = useState(false);
   const [userDropdownOpen, setUserDropdownOpen] = useState(false);
+  const userDropdownRef = useRef(null);
+
+  useEffect(() => {
+    function handleClickOutside(e) {
+      if (userDropdownRef.current && !userDropdownRef.current.contains(e.target)) {
+        setUserDropdownOpen(false);
+      }
+    }
+    if (userDropdownOpen) {
+      document.addEventListener('mousedown', handleClickOutside);
+      document.addEventListener('touchstart', handleClickOutside);
+    }
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener('touchstart', handleClickOutside);
+    };
+  }, [userDropdownOpen]);
   const [notificationsOpen, setNotificationsOpen] = useState(false);
 
   // Data states
@@ -1608,7 +1625,7 @@ export function OrganizerDashboard() {
             <NotificationCenter />
 
             {/* Profile Dropdown Menu */}
-            <div className="org-user-pill" onClick={() => setUserDropdownOpen(!userDropdownOpen)}>
+            <div className="org-user-pill" ref={userDropdownRef} onClick={() => setUserDropdownOpen(!userDropdownOpen)}>
               <div className="org-user-avatar-initials" style={{ overflow: 'hidden' }}>
                 {user?.avatar ? (
                   <img src={user.avatar} alt="Avatar" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />

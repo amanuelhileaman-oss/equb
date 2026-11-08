@@ -238,7 +238,8 @@
   justify-content: space-between;
   position: sticky;
   top: 0;
-  z-index: 40;
+  z-index: 100 !important;
+  overflow: visible !important;
   transition: background-color 0.25s ease, border-color 0.25s ease;
 }
 
@@ -428,10 +429,11 @@
   background-color: #ffffff;
   border: 1px solid var(--tre-border);
   border-radius: var(--tre-radius-md);
-  box-shadow: var(--tre-shadow-md);
-  width: 200px;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.25);
+  width: 210px;
+  max-width: 85vw;
   padding: 0.5rem;
-  z-index: 60;
+  z-index: 10001 !important;
   display: flex;
   flex-direction: column;
   gap: 0.25rem;
@@ -1259,7 +1261,8 @@
     width: 100%;
     max-width: 100%;
     box-sizing: border-box;
-    overflow-x: hidden;
+    overflow: visible !important;
+    z-index: 100 !important;
   }
   .tre-topbar-left {
     gap: 0.5rem;
@@ -1273,6 +1276,8 @@
     flex-wrap: nowrap;
     flex-shrink: 0;
     min-width: 0;
+    overflow: visible !important;
+    position: relative;
   }
   .tre-user-name,
   .tre-user-role {
