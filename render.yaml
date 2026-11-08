@@ -21,9 +21,7 @@ services:
       - key: USE_LOCAL_DB
         value: "False"
       - key: DATABASE_URL
-        fromDatabase:
-          name: equb-postgres
-          property: connectionString
+        value: "postgresql://neondb_owner:npg_L8UITpSmAcs3@ep-lucky-waterfall-b9h5tt2p-pooler.c-7.eu-central-1.aws.neon.tech/equb?sslmode=require&channel_binding=require"
       - key: CHAPA_SECRET_KEY
         sync: false
       - key: CHAPA_PUBLIC_KEY
@@ -56,13 +54,5 @@ services:
       - key: VITE_API_URL
         value: "https://equb-backend-r9ie.onrender.com"
 
-databases:
-  # ============================================================================
-  # 3. MANAGED POSTGRESQL DATABASE (FREE TIER)
-  # ============================================================================
-  - name: equb-postgres
-    databaseName: digital_equb_db
-    user: equb_admin
-    region: frankfurt
-    plan: free
+
 
