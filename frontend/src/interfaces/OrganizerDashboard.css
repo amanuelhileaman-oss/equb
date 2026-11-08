@@ -32,6 +32,9 @@
 .org-container {
   display: flex;
   min-height: 100vh;
+  width: 100%;
+  max-width: 100vw;
+  overflow-x: hidden;
   background-color: var(--org-bg);
   color: var(--org-text-main);
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
@@ -264,6 +267,9 @@
   flex-direction: column;
   min-height: 100vh;
   min-width: 0;
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
   transition: margin-left 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
 

@@ -927,7 +927,19 @@
 
 @media (max-width: 768px) {
   .admin-topbar {
-    padding: 0 0.85rem;
+    padding: 0 0.65rem;
+    height: 56px;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    overflow-x: hidden;
+  }
+  .admin-topbar-right {
+    gap: 0.35rem;
+    flex-shrink: 0;
+  }
+  .admin-user-profile {
+    padding: 0;
   }
   .admin-user-name,
   .admin-user-role {
@@ -937,7 +949,11 @@
     display: none;
   }
   .admin-content-canvas {
-    padding: 1rem 0.85rem;
+    padding: 1rem 0.65rem;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    overflow-x: hidden;
   }
   .admin-kpi-grid {
     grid-template-columns: 1fr;

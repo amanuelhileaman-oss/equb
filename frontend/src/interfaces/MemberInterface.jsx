@@ -42,7 +42,8 @@ import {
   HelpCircle,
   Eye,
   Camera,
-  Info
+  Info,
+  Menu
 } from 'lucide-react';
 
 export function MemberInterface() {
@@ -52,6 +53,7 @@ export function MemberInterface() {
 
   // Active navigation tab
   const [activeTab, setActiveTab] = useState('home'); // 'home' | 'groups' | 'contributions' | 'payments' | 'payouts' | 'announcements' | 'disputes' | 'notifications' | 'profile' | 'help'
+  const [mobileDrawerOpen, setMobileDrawerOpen] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
   const [memberAgreements, setMemberAgreements] = useState([]);
   const [respondingAgreementId, setRespondingAgreementId] = useState(null);
@@ -384,19 +386,35 @@ export function MemberInterface() {
 
   return (
     <div className="member-portal-container" data-theme={effectiveTheme}>
+      {/* Mobile Drawer Backdrop Overlay */}
+      <div
+        className={`member-drawer-backdrop ${mobileDrawerOpen ? 'active' : ''}`}
+        onClick={() => setMobileDrawerOpen(false)}
+      />
+
       {/* ====================================================================
-          DESKTOP SIDEBAR (Dark Slate #0f172a matching mockup)
+          SIDEBAR (Desktop + Mobile Slide-out Drawer)
           ==================================================================== */}
-      <aside className="member-sidebar">
+      <aside className={`member-sidebar ${mobileDrawerOpen ? 'mobile-open' : ''}`}>
         {/* Brand Header */}
         <div className="member-sidebar-header">
-          <div className="member-brand-emblem">
-            <Wallet size={22} />
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+            <div className="member-brand-emblem">
+              <Wallet size={22} />
+            </div>
+            <div className="member-brand-title-wrap">
+              <div className="member-brand-title">Digital Equb</div>
+              <div className="member-brand-sub">Ethiopia</div>
+            </div>
           </div>
-          <div className="member-brand-title-wrap">
-            <div className="member-brand-title">Digital Equb</div>
-            <div className="member-brand-sub">Ethiopia</div>
-          </div>
+          <button
+            type="button"
+            className="member-sidebar-close-btn"
+            onClick={() => setMobileDrawerOpen(false)}
+            aria-label="Close navigation"
+          >
+            <X size={20} />
+          </button>
         </div>
 
         {/* Navigation List */}
@@ -404,7 +422,7 @@ export function MemberInterface() {
           <button
             type="button"
             className={`member-nav-item ${activeTab === 'home' ? 'active' : ''}`}
-            onClick={() => setActiveTab('home')}
+            onClick={() => { setActiveTab('home'); setMobileDrawerOpen(false); }}
           >
             <div className="member-nav-link-content">
               <Home size={18} />
@@ -415,7 +433,7 @@ export function MemberInterface() {
           <button
             type="button"
             className={`member-nav-item ${activeTab === 'groups' || activeTab === 'group-detail' ? 'active' : ''}`}
-            onClick={() => setActiveTab('groups')}
+            onClick={() => { setActiveTab('groups'); setMobileDrawerOpen(false); }}
           >
             <div className="member-nav-link-content">
               <Users size={18} />
@@ -426,7 +444,7 @@ export function MemberInterface() {
           <button
             type="button"
             className={`member-nav-item ${activeTab === 'contributions' ? 'active' : ''}`}
-            onClick={() => setActiveTab('contributions')}
+            onClick={() => { setActiveTab('contributions'); setMobileDrawerOpen(false); }}
           >
             <div className="member-nav-link-content">
               <Wallet size={18} />
@@ -437,7 +455,7 @@ export function MemberInterface() {
           <button
             type="button"
             className={`member-nav-item ${activeTab === 'payments' ? 'active' : ''}`}
-            onClick={() => setActiveTab('payments')}
+            onClick={() => { setActiveTab('payments'); setMobileDrawerOpen(false); }}
           >
             <div className="member-nav-link-content">
               <Clock size={18} />
@@ -448,7 +466,7 @@ export function MemberInterface() {
           <button
             type="button"
             className={`member-nav-item ${activeTab === 'payouts' ? 'active' : ''}`}
-            onClick={() => setActiveTab('payouts')}
+            onClick={() => { setActiveTab('payouts'); setMobileDrawerOpen(false); }}
           >
             <div className="member-nav-link-content">
               <Gift size={18} />
@@ -459,7 +477,7 @@ export function MemberInterface() {
           <button
             type="button"
             className={`member-nav-item ${activeTab === 'announcements' ? 'active' : ''}`}
-            onClick={() => setActiveTab('announcements')}
+            onClick={() => { setActiveTab('announcements'); setMobileDrawerOpen(false); }}
           >
             <div className="member-nav-link-content">
               <Megaphone size={18} />
@@ -470,7 +488,7 @@ export function MemberInterface() {
           <button
             type="button"
             className={`member-nav-item ${activeTab === 'disputes' ? 'active' : ''}`}
-            onClick={() => setActiveTab('disputes')}
+            onClick={() => { setActiveTab('disputes'); setMobileDrawerOpen(false); }}
           >
             <div className="member-nav-link-content">
               <MessageSquare size={18} />
@@ -484,7 +502,7 @@ export function MemberInterface() {
           <button
             type="button"
             className={`member-nav-item ${activeTab === 'notifications' ? 'active' : ''}`}
-            onClick={() => setActiveTab('notifications')}
+            onClick={() => { setActiveTab('notifications'); setMobileDrawerOpen(false); }}
           >
             <div className="member-nav-link-content">
               <Bell size={18} />
@@ -498,7 +516,7 @@ export function MemberInterface() {
           <button
             type="button"
             className={`member-nav-item ${activeTab === 'profile' ? 'active' : ''}`}
-            onClick={() => setActiveTab('profile')}
+            onClick={() => { setActiveTab('profile'); setMobileDrawerOpen(false); }}
           >
             <div className="member-nav-link-content">
               <Settings size={18} />
@@ -509,7 +527,7 @@ export function MemberInterface() {
           <button
             type="button"
             className={`member-nav-item ${activeTab === 'help' ? 'active' : ''}`}
-            onClick={() => setActiveTab('help')}
+            onClick={() => { setActiveTab('help'); setMobileDrawerOpen(false); }}
           >
             <div className="member-nav-link-content">
               <Headphones size={18} />
@@ -535,16 +553,29 @@ export function MemberInterface() {
       <div className="member-main">
         {/* Topbar */}
         <header className="member-topbar">
-          {/* Search Bar */}
-          <div className="member-search-box">
-            <Search size={18} color="#94a3b8" />
-            <input
-              type="text"
-              className="member-search-input"
-              placeholder={t('search') || 'Search groups, transactions...'}
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-            />
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem', minWidth: 0 }}>
+            {/* Mobile Menu Button */}
+            <button
+              type="button"
+              className="member-mobile-drawer-btn"
+              onClick={() => setMobileDrawerOpen(true)}
+              aria-label="Open navigation menu"
+              title="Open full menu"
+            >
+              <Menu size={20} />
+            </button>
+
+            {/* Search Bar */}
+            <div className="member-search-box">
+              <Search size={18} color="#94a3b8" />
+              <input
+                type="text"
+                className="member-search-input"
+                placeholder={t('search') || 'Search groups, transactions...'}
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+              />
+            </div>
           </div>
 
           {/* Right Topbar Actions */}
@@ -552,22 +583,13 @@ export function MemberInterface() {
             {/* Sync Refresh Button */}
             <button
               type="button"
-              className="btn-member-outline"
+              className="btn-member-outline btn-member-refresh"
               onClick={handleRefreshAll}
               disabled={refreshing}
               title="Refresh member data"
-              style={{
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: '0.35rem',
-                padding: '0.45rem 0.75rem',
-                borderRadius: '8px',
-                fontSize: '0.82rem',
-                fontWeight: 600
-              }}
             >
               <RefreshCw size={14} className={refreshing ? 'spin-animation' : ''} />
-              <span>{refreshing ? 'Syncing...' : 'Refresh'}</span>
+              <span className="member-refresh-text">{refreshing ? 'Syncing...' : 'Refresh'}</span>
             </button>
 
             {/* Real Notification Center */}
@@ -577,7 +599,7 @@ export function MemberInterface() {
             <HeaderControls />
 
             {/* User Profile */}
-            <div className="member-user-profile" onClick={() => setActiveTab('profile')}>
+            <div className="member-user-profile" onClick={() => { setActiveTab('profile'); setMobileDrawerOpen(false); }} title={displayName}>
               <div className="member-avatar" style={{ overflow: 'hidden' }}>
                 {user?.avatar ? (
                   <img src={user.avatar} alt="Avatar" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
@@ -595,8 +617,7 @@ export function MemberInterface() {
             <button
               type="button"
               onClick={logout}
-              className="btn-member-outline"
-              style={{ padding: '0.4rem 0.75rem', borderRadius: '8px' }}
+              className="btn-member-outline btn-member-logout"
               title="Logout"
             >
               <LogOut size={16} />
@@ -2411,37 +2432,37 @@ export function MemberInterface() {
       )}
 
       {/* ====================================================================
-          MOBILE BOTTOM NAVIGATION (Home, My Groups, Payments, Notifs, Profile)
+          MOBILE BOTTOM NAVIGATION (Home, Groups, Payments, Alerts, Menu Drawer)
           ==================================================================== */}
       <nav className="member-mobile-bottom-bar">
         <button
           type="button"
-          className={`member-mobile-nav-btn ${activeTab === 'home' ? 'active' : ''}`}
-          onClick={() => setActiveTab('home')}
+          className={`member-mobile-nav-btn ${activeTab === 'home' && !mobileDrawerOpen ? 'active' : ''}`}
+          onClick={() => { setActiveTab('home'); setMobileDrawerOpen(false); }}
         >
           <Home size={20} />
           <span>Home</span>
         </button>
         <button
           type="button"
-          className={`member-mobile-nav-btn ${activeTab === 'groups' ? 'active' : ''}`}
-          onClick={() => setActiveTab('groups')}
+          className={`member-mobile-nav-btn ${(activeTab === 'groups' || activeTab === 'group-detail') && !mobileDrawerOpen ? 'active' : ''}`}
+          onClick={() => { setActiveTab('groups'); setMobileDrawerOpen(false); }}
         >
           <Users size={20} />
           <span>Groups</span>
         </button>
         <button
           type="button"
-          className={`member-mobile-nav-btn ${activeTab === 'contributions' || activeTab === 'payments' ? 'active' : ''}`}
-          onClick={() => setActiveTab('contributions')}
+          className={`member-mobile-nav-btn ${(activeTab === 'contributions' || activeTab === 'payments') && !mobileDrawerOpen ? 'active' : ''}`}
+          onClick={() => { setActiveTab('contributions'); setMobileDrawerOpen(false); }}
         >
           <Wallet size={20} />
           <span>Payments</span>
         </button>
         <button
           type="button"
-          className={`member-mobile-nav-btn ${activeTab === 'notifications' ? 'active' : ''}`}
-          onClick={() => setActiveTab('notifications')}
+          className={`member-mobile-nav-btn ${activeTab === 'notifications' && !mobileDrawerOpen ? 'active' : ''}`}
+          onClick={() => { setActiveTab('notifications'); setMobileDrawerOpen(false); }}
         >
           <Bell size={20} />
           <span>Alerts</span>
@@ -2453,11 +2474,12 @@ export function MemberInterface() {
         </button>
         <button
           type="button"
-          className={`member-mobile-nav-btn ${activeTab === 'profile' ? 'active' : ''}`}
-          onClick={() => setActiveTab('profile')}
+          className={`member-mobile-nav-btn ${mobileDrawerOpen ? 'active' : ''}`}
+          onClick={() => setMobileDrawerOpen(!mobileDrawerOpen)}
+          title="Open complete navigation menu"
         >
-          <Settings size={20} />
-          <span>Profile</span>
+          <Menu size={20} />
+          <span>Menu</span>
         </button>
       </nav>
     </div>

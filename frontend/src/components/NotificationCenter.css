@@ -278,3 +278,19 @@
   background: rgba(255, 255, 255, 0.05);
 }
 
+@media (max-width: 640px) {
+  .notif-bell-btn {
+    width: 34px;
+    height: 34px;
+    border-radius: 8px;
+  }
+  .notif-popover {
+    position: fixed;
+    top: 60px;
+    left: 10px;
+    right: 10px;
+    width: calc(100vw - 20px);
+    max-width: calc(100vw - 20px);
+  }
+}
+
