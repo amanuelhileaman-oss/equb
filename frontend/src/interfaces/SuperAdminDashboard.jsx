@@ -6,6 +6,7 @@ import { useTheme } from '../context/ThemeContext';
 import { HeaderControls } from '../components/HeaderControls';
 import { NotificationCenter } from '../components/NotificationCenter';
 import { ToastNotification } from '../components/ToastNotification';
+import { ChatWidget } from '../components/ChatWidget';
 import { processAvatarImage } from '../utils/imageHelper';
 import './SuperAdminDashboard.css';
 
@@ -5423,6 +5424,9 @@ export function SuperAdminDashboard() {
           </div>
         </div>
       )}
+
+      {/* Bidirectional Chat Widget */}
+      <ChatWidget currentUser={user} />
 
     </div>
   );

@@ -76,6 +76,9 @@ from apps.common.member_views import (
 from apps.notifications.views import (
     NotificationListView, NotificationMarkReadView, NotificationMarkAllReadView
 )
+from apps.notifications.chat_views import (
+    ChatContactsView, ChatMessagesView
+)
 from apps.groups.lottery_views import (
     OrganizerGroupLotteryView, OrganizerTriggerLotteryDrawView,
     OrganizerStartNextCycleView, MemberGroupLotteryView
@@ -267,6 +270,10 @@ urlpatterns = [
     path('notifications/', NotificationListView.as_view(), name='notifications-list'),
     path('notifications/<uuid:notification_id>/mark-read/', NotificationMarkReadView.as_view(), name='notification-mark-read'),
     path('notifications/mark-all-read/', NotificationMarkAllReadView.as_view(), name='notification-mark-all-read'),
+
+    # Bidirectional Real-time Chat System
+    path('chat/contacts/', ChatContactsView.as_view(), name='chat-contacts'),
+    path('chat/messages/', ChatMessagesView.as_view(), name='chat-messages'),
 
     # CSV Financial & Obligation Exports
     path('groups/<uuid:group_id>/export/ledger/', GroupLedgerExportCSVView.as_view(), name='group-ledger-export'),

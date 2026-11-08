@@ -6,6 +6,7 @@ import { useTheme } from '../context/ThemeContext';
 import { HeaderControls } from '../components/HeaderControls';
 import { NotificationCenter } from '../components/NotificationCenter';
 import { ToastNotification } from '../components/ToastNotification';
+import { ChatWidget } from '../components/ChatWidget';
 import { processAvatarImage } from '../utils/imageHelper';
 import './MemberInterface.css';
 import {
@@ -652,33 +653,15 @@ export function MemberInterface() {
                   </button>
                   <button
                     type="button"
-                    className="member-profile-item"
-                    onClick={() => { setActiveTab('help'); setProfileDropdownOpen(false); setMobileDrawerOpen(false); }}
-                  >
-                    <Headphones size={16} />
-                    <span>{t('memNavHelpSupport') || 'Help & Support'}</span>
-                  </button>
-                  <button
-                    type="button"
                     className="member-profile-item danger"
                     onClick={() => { logout(); setProfileDropdownOpen(false); }}
                   >
                     <LogOut size={16} />
-                    <span>{t('authLogout') || 'Logout'}</span>
+                    <span>{t('logout') || 'Sign Out'}</span>
                   </button>
                 </div>
               )}
             </div>
-
-            {/* Logout Button */}
-            <button
-              type="button"
-              onClick={logout}
-              className="btn-member-outline btn-member-logout"
-              title="Logout"
-            >
-              <LogOut size={16} />
-            </button>
           </div>
         </header>
 
@@ -2539,6 +2522,9 @@ export function MemberInterface() {
           <span>Menu</span>
         </button>
       </nav>
+
+      {/* Bidirectional Chat Widget with Group Organizer */}
+      <ChatWidget currentUser={user} />
     </div>
   );
 }

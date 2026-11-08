@@ -69,3 +69,39 @@ class Notification(models.Model):
 
     def __str__(self):
         return f"{self.user.email} - {self.title} ({'Read' if self.is_read else 'Unread'})"
+
+
+class ChatMessage(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    sender = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name='sent_chat_messages'
+    )
+    recipient = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name='received_chat_messages'
+    )
+    group = models.ForeignKey(
+        'groups.EqubGroup',
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True,
+        related_name='chat_messages'
+    )
+    message = models.TextField()
+    is_read = models.BooleanField(default=False)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        db_table = 'chat_messages'
+        ordering = ['created_at']
+        indexes = [
+            models.Index(fields=['sender', 'recipient', 'created_at']),
+            models.Index(fields=['recipient', 'is_read']),
+        ]
+
+    def __str__(self):
+        return f"Chat from {self.sender.email} to {self.recipient.email} at {self.created_at}"
+

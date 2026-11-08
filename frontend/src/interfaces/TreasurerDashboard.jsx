@@ -6,6 +6,7 @@ import { useTheme } from '../context/ThemeContext';
 import { HeaderControls } from '../components/HeaderControls';
 import { NotificationCenter } from '../components/NotificationCenter';
 import { ToastNotification } from '../components/ToastNotification';
+import { ChatWidget } from '../components/ChatWidget';
 import { processAvatarImage } from '../utils/imageHelper';
 import './TreasurerDashboard.css';
 
@@ -812,7 +813,7 @@ export function TreasurerDashboard() {
                     onClick={() => { logout(); setProfileMenuOpen(false); }}
                   >
                     <LogOut size={16} />
-                    <span>{t('authLogout')}</span>
+                    <span>{t('logout') || 'Sign Out'}</span>
                   </button>
                 </div>
               )}
@@ -2659,6 +2660,8 @@ export function TreasurerDashboard() {
           </div>
         </div>
       )}
+      {/* Bidirectional Chat Widget with Organizer */}
+      <ChatWidget currentUser={user} />
     </div>
   );
 }

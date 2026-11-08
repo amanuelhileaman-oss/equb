@@ -299,4 +299,12 @@ export const api = {
   getTreasurerOverdueMonitoring: (groupId) => request(`/api/v1/treasurer/groups/${groupId}/overdue-monitoring/`),
   getMemberPaymentAgreements: () => request('/api/v1/member/payment-agreements/'),
   respondMemberPaymentAgreement: (agreementId, accept, notes = '') => request(`/api/v1/member/payment-agreements/${agreementId}/respond/`, { method: 'POST', body: { accept, notes } }),
+
+  // Bidirectional Chat
+  getChatContacts: () => request('/api/v1/chat/contacts/'),
+  getChatMessages: (recipientId) => request(`/api/v1/chat/messages/?recipient_id=${recipientId}`),
+  sendChatMessage: (recipientId, message, groupId = null) => request('/api/v1/chat/messages/', {
+    method: 'POST',
+    body: { recipient_id: recipientId, message, group_id: groupId }
+  }),
 };

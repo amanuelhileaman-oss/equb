@@ -6,6 +6,7 @@ import { useTheme } from '../context/ThemeContext';
 import { HeaderControls } from '../components/HeaderControls';
 import { NotificationCenter } from '../components/NotificationCenter';
 import { ToastNotification } from '../components/ToastNotification';
+import { ChatWidget } from '../components/ChatWidget';
 import { processAvatarImage } from '../utils/imageHelper';
 import './OrganizerDashboard.css';
 import {
@@ -5769,6 +5770,8 @@ export function OrganizerDashboard() {
           </div>
         </div>
       )}
+      {/* Bidirectional Chat Widget with Dropdown Selector */}
+      <ChatWidget currentUser={user} />
     </div>
   );
 }
