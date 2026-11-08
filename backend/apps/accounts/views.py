@@ -158,6 +158,9 @@ class LoginView(views.APIView):
             authenticated_user.save(update_fields=['failed_login_attempts', 'last_failed_login'])
 
         login(request, authenticated_user)
+        if not request.session.session_key:
+            request.session.save()
+        session_key = request.session.session_key
         csrf_token = get_token(request)
 
         log_audit_event(
@@ -196,7 +199,9 @@ class LoginView(views.APIView):
             'is_organizer': is_org,
             'is_treasurer': is_treas,
             'primary_role': primary_role,
-            'csrf_token': csrf_token
+            'csrf_token': csrf_token,
+            'session_key': session_key,
+            'token': session_key,
         }, status=status.HTTP_200_OK)
 
 

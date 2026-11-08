@@ -159,6 +159,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # Django REST Framework Configuration
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
+        'apps.accounts.authentication.HybridSessionAuthentication',
         'rest_framework.authentication.SessionAuthentication',
     ],
     'DEFAULT_PERMISSION_CLASSES': [
@@ -171,6 +172,11 @@ REST_FRAMEWORK = {
 
 # CORS & CSRF Settings for React Frontend
 CORS_ALLOW_CREDENTIALS = True
+from corsheaders.defaults import default_headers
+CORS_ALLOW_HEADERS = list(default_headers) + [
+    'x-session-id',
+    'x-csrftoken',
+]
 
 default_origins = [
     'http://localhost:5173',
@@ -195,10 +201,23 @@ if frontend_env_url:
         CSRF_TRUSTED_ORIGINS.append(clean_frontend_url)
 
 SESSION_COOKIE_HTTPONLY = True
-SESSION_COOKIE_SAMESITE = 'Lax'
 SESSION_COOKIE_AGE = 86400 * 7 # 7 days
 CSRF_COOKIE_HTTPONLY = False
-CSRF_COOKIE_SAMESITE = 'Lax'
+
+# Cross-Site Cookie Configuration for Cloud Deployments (e.g. Render subdomains)
+# When the frontend (equb-frontend.onrender.com) and backend (equb-backend-r9ie.onrender.com)
+# are on different subdomains, browsers require SameSite='None' and Secure=True.
+is_cross_site_deploy = not DEBUG or ('onrender.com' in os.environ.get('ALLOWED_HOSTS', ''))
+if is_cross_site_deploy:
+    SESSION_COOKIE_SAMESITE = 'None'
+    SESSION_COOKIE_SECURE = True
+    CSRF_COOKIE_SAMESITE = 'None'
+    CSRF_COOKIE_SECURE = True
+else:
+    SESSION_COOKIE_SAMESITE = 'Lax'
+    SESSION_COOKIE_SECURE = False
+    CSRF_COOKIE_SAMESITE = 'Lax'
+    CSRF_COOKIE_SECURE = False
 
 # Chapa Payment Gateway Configuration
 CHAPA_SECRET_KEY = os.getenv('CHAPA_SECRET_KEY', 'CHASECK_TEST-mock-test-key-for-development')

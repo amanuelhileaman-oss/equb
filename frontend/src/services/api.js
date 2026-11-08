@@ -29,6 +29,13 @@ async function request(endpoint, options = {}) {
     headers['X-CSRFToken'] = csrfToken;
   }
 
+  // Attach session token header for cross-origin reliability across distinct subdomains
+  const sessionToken = localStorage.getItem('equb_session_token') || window.__SESSION_TOKEN__;
+  if (sessionToken && !headers['Authorization']) {
+    headers['Authorization'] = `Bearer ${sessionToken}`;
+    headers['X-Session-ID'] = sessionToken;
+  }
+
   // Handle FormData vs JSON
   if (options.body && !(options.body instanceof FormData)) {
     headers['Content-Type'] = 'application/json';

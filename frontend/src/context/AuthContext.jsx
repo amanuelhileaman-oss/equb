@@ -53,6 +53,9 @@ export function AuthProvider({ children }) {
         setUser(null);
       }
     } catch (err) {
+      if (err?.status === 401) {
+        localStorage.removeItem('equb_session_token');
+      }
       setUser(null);
     } finally {
       setLoading(false);
@@ -70,6 +73,10 @@ export function AuthProvider({ children }) {
     }
     if (res?.csrf_token) {
       window.__CSRF_TOKEN__ = res.csrf_token;
+    }
+    if (res?.session_key || res?.token) {
+      localStorage.setItem('equb_session_token', res.session_key || res.token);
+      window.__SESSION_TOKEN__ = res.session_key || res.token;
     }
     if (res?.user) {
       setUser(res.user);
@@ -119,11 +126,15 @@ export function AuthProvider({ children }) {
       await api.logout();
     } catch (e) {
       console.error(e);
+    } finally {
+      localStorage.removeItem('equb_session_token');
+      delete window.__SESSION_TOKEN__;
+      delete window.__CSRF_TOKEN__;
+      setUser(null);
+      setGroupRoles([]);
+      setCurrentInterface('AUTH');
+      setSelectedGroupId(null);
     }
-    setUser(null);
-    setGroupRoles([]);
-    setCurrentInterface('MEMBER');
-    setSelectedGroupId(null);
   };
 
   const hasRole = (roleCode) => {
