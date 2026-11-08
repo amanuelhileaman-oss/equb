@@ -5,6 +5,7 @@ import { useLanguage } from '../context/LanguageContext';
 import { useTheme } from '../context/ThemeContext';
 import { HeaderControls } from '../components/HeaderControls';
 import { NotificationCenter } from '../components/NotificationCenter';
+import { ToastNotification } from '../components/ToastNotification';
 import { processAvatarImage } from '../utils/imageHelper';
 import './MemberInterface.css';
 import {
@@ -603,19 +604,20 @@ export function MemberInterface() {
           </div>
         </header>
 
-        {/* Alert Notifications */}
+        {/* Animated Movable Alert Notifications */}
         {errorMsg && (
-          <div style={{ margin: '1rem 2rem 0', padding: '0.75rem 1rem', background: '#fee2e2', color: '#b91c1c', borderRadius: '8px', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-            <AlertCircle size={18} />
-            <span>{errorMsg}</span>
-          </div>
+          <ToastNotification
+            message={errorMsg}
+            type="error"
+            onClose={() => setErrorMsg('')}
+          />
         )}
         {successMsg && (
-          <div style={{ margin: '1rem 2rem 0', padding: '0.75rem 1rem', background: '#dcfce7', color: '#15803d', borderRadius: '8px', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-            <CheckCircle size={18} />
-            <span>{successMsg}</span>
-            <button type="button" onClick={() => setSuccessMsg('')} style={{ marginLeft: 'auto', background: 'none', border: 'none', cursor: 'pointer', color: '#15803d' }}>×</button>
-          </div>
+          <ToastNotification
+            message={successMsg}
+            type="success"
+            onClose={() => setSuccessMsg('')}
+          />
         )}
 
         {/* Content Body */}

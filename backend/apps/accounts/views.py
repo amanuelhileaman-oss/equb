@@ -31,6 +31,7 @@ def get_client_ip(request):
 
 
 class RegisterView(views.APIView):
+    authentication_classes = []
     permission_classes = [permissions.AllowAny]
 
     def post(self, request):
@@ -46,6 +47,7 @@ class RegisterView(views.APIView):
 
 
 class LoginView(views.APIView):
+    authentication_classes = []
     permission_classes = [permissions.AllowAny]
 
     def post(self, request):
@@ -406,6 +408,7 @@ class MfaDisableView(views.APIView):
 # PASSWORD RECOVERY (EXPIRING, SINGLE-USE TOKENS)
 # ============================================================================
 class PasswordResetRequestView(views.APIView):
+    authentication_classes = []
     permission_classes = [permissions.AllowAny]
 
     def post(self, request):
@@ -451,6 +454,7 @@ class PasswordResetRequestView(views.APIView):
 
 
 class PasswordResetConfirmView(views.APIView):
+    authentication_classes = []
     permission_classes = [permissions.AllowAny]
 
     def post(self, request):

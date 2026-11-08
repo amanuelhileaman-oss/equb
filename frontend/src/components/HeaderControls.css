@@ -223,14 +223,19 @@
 
 /* Responsive adjustments */
 @media (max-width: 640px) {
+  .header-controls-wrap {
+    gap: 0.25rem;
+  }
   .header-control-trigger .control-label {
     display: none;
   }
   .header-control-trigger {
-    padding: 0.45rem 0.55rem;
+    padding: 0.35rem 0.45rem;
+    font-size: 0.75rem;
   }
   .header-control-menu {
-    right: -10px;
+    right: 0;
+    max-width: 90vw;
   }
 }
 

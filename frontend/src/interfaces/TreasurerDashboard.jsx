@@ -5,6 +5,7 @@ import { useLanguage } from '../context/LanguageContext';
 import { useTheme } from '../context/ThemeContext';
 import { HeaderControls } from '../components/HeaderControls';
 import { NotificationCenter } from '../components/NotificationCenter';
+import { ToastNotification } from '../components/ToastNotification';
 import { processAvatarImage } from '../utils/imageHelper';
 import './TreasurerDashboard.css';
 
@@ -800,24 +801,20 @@ export function TreasurerDashboard() {
           </div>
         </header>
 
-        {/* Global Feedback Banners */}
+        {/* Animated Movable Toast Notifications */}
         {errorMessage && (
-          <div style={{ margin: '1rem 1.5rem 0', padding: '0.75rem 1rem', backgroundColor: '#fef2f2', border: '1px solid #fecaca', borderRadius: '8px', color: '#b91c1c', display: 'flex', alignItems: 'center', justifyContent: 'space-between', fontSize: '0.88rem' }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-              <AlertTriangle size={18} />
-              <span>{errorMessage}</span>
-            </div>
-            <button onClick={() => setErrorMessage('')} style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#b91c1c' }}>✕</button>
-          </div>
+          <ToastNotification
+            message={errorMessage}
+            type="error"
+            onClose={() => setErrorMessage('')}
+          />
         )}
         {successMessage && (
-          <div style={{ margin: '1rem 1.5rem 0', padding: '0.75rem 1rem', backgroundColor: '#ecfdf5', border: '1px solid #a7f3d0', borderRadius: '8px', color: '#047857', display: 'flex', alignItems: 'center', justifyContent: 'space-between', fontSize: '0.88rem' }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-              <CheckCircle2 size={18} />
-              <span>{successMessage}</span>
-            </div>
-            <button onClick={() => setSuccessMessage('')} style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#047857' }}>✕</button>
-          </div>
+          <ToastNotification
+            message={successMessage}
+            type="success"
+            onClose={() => setSuccessMessage('')}
+          />
         )}
 
         {/* Content View Routing */}

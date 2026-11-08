@@ -1,0 +1,130 @@
+/* Digital Equb Ethiopia — Animated Movable Toast Notification */
+
+.toast-portal {
+  position: fixed;
+  top: 1.25rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.6rem;
+  pointer-events: none;
+  width: 90%;
+  max-width: 440px;
+}
+
+.toast-item {
+  pointer-events: auto;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem 1rem;
+  border-radius: 12px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.25), 0 8px 10px -6px rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  cursor: grab;
+  user-select: none;
+  touch-action: pan-y;
+  transition: box-shadow 0.2s ease, transform 0.15s ease;
+  animation: toastSlideDown 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.toast-item:active {
+  cursor: grabbing;
+}
+
+.toast-item.toast-error {
+  background: rgba(239, 68, 68, 0.95);
+  color: #ffffff;
+  border: 1px solid rgba(254, 202, 202, 0.3);
+}
+
+.toast-item.toast-success {
+  background: rgba(16, 185, 129, 0.95);
+  color: #ffffff;
+  border: 1px solid rgba(167, 243, 208, 0.3);
+}
+
+.toast-item.toast-info {
+  background: rgba(37, 99, 235, 0.95);
+  color: #ffffff;
+  border: 1px solid rgba(191, 219, 254, 0.3);
+}
+
+.toast-content {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  flex: 1;
+  min-width: 0;
+}
+
+.toast-message {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 0.85rem;
+  line-height: 1.3;
+}
+
+.toast-close-btn {
+  background: transparent;
+  border: none;
+  color: rgba(255, 255, 255, 0.85);
+  cursor: pointer;
+  padding: 0.25rem;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.15s, color 0.15s;
+}
+
+.toast-close-btn:hover {
+  background: rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+}
+
+@keyframes toastSlideDown {
+  0% {
+    opacity: 0;
+    transform: translateY(-24px) scale(0.96);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes toastSlideUp {
+  0% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-24px) scale(0.96);
+  }
+}
+
+.toast-item.toast-leaving {
+  animation: toastSlideUp 0.25s ease forwards;
+}
+
+@media (max-width: 640px) {
+  .toast-portal {
+    top: 0.75rem;
+    width: 95%;
+  }
+  .toast-item {
+    padding: 0.65rem 0.85rem;
+    font-size: 0.825rem;
+  }
+}
+

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { useLanguage } from '../context/LanguageContext';
 import { HeaderControls } from './HeaderControls';
+import { ToastNotification } from './ToastNotification';
 import { Lock, CheckCircle2, AlertCircle, Layers } from 'lucide-react';
 
 export function AuthView() {
@@ -81,39 +82,19 @@ export function AuthView() {
         </div>
 
         {error && (
-          <div style={{
-            background: 'rgba(239, 68, 68, 0.15)',
-            border: '1px solid rgba(239, 68, 68, 0.3)',
-            borderRadius: 'var(--radius-md)',
-            padding: '0.75rem 1rem',
-            marginBottom: '1.25rem',
-            color: '#f87171',
-            display: 'flex',
-            alignItems: 'center',
-            gap: '0.5rem',
-            fontSize: '0.875rem'
-          }}>
-            <AlertCircle size={18} />
-            <span>{error}</span>
-          </div>
+          <ToastNotification
+            message={error}
+            type="error"
+            onClose={() => setError('')}
+          />
         )}
 
         {successMsg && (
-          <div style={{
-            background: 'rgba(16, 185, 129, 0.15)',
-            border: '1px solid rgba(16, 185, 129, 0.3)',
-            borderRadius: 'var(--radius-md)',
-            padding: '0.75rem 1rem',
-            marginBottom: '1.25rem',
-            color: '#34d399',
-            display: 'flex',
-            alignItems: 'center',
-            gap: '0.5rem',
-            fontSize: '0.875rem'
-          }}>
-            <CheckCircle2 size={18} />
-            <span>{successMsg}</span>
-          </div>
+          <ToastNotification
+            message={successMsg}
+            type="success"
+            onClose={() => setSuccessMsg('')}
+          />
         )}
 
         {mfaRequired ? (

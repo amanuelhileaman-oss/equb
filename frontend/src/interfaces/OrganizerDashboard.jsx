@@ -5,6 +5,7 @@ import { useLanguage } from '../context/LanguageContext';
 import { useTheme } from '../context/ThemeContext';
 import { HeaderControls } from '../components/HeaderControls';
 import { NotificationCenter } from '../components/NotificationCenter';
+import { ToastNotification } from '../components/ToastNotification';
 import { processAvatarImage } from '../utils/imageHelper';
 import './OrganizerDashboard.css';
 import {
@@ -1275,18 +1276,20 @@ export function OrganizerDashboard() {
           </div>
         </header>
 
-        {/* Alerts */}
+        {/* Animated Movable Alerts */}
         {error && (
-          <div style={{ maxWidth: '850px', margin: '1.5rem auto 0', width: '92%', padding: '0.85rem 1.25rem', background: '#451a1a', border: '1px solid #7f1d1d', borderRadius: '10px', color: '#fca5a5', display: 'flex', alignItems: 'center', gap: '0.6rem', fontSize: '0.875rem' }}>
-            <AlertCircle size={18} />
-            <span>{error}</span>
-          </div>
+          <ToastNotification
+            message={error}
+            type="error"
+            onClose={() => setError('')}
+          />
         )}
         {successMsg && (
-          <div style={{ maxWidth: '850px', margin: '1.5rem auto 0', width: '92%', padding: '0.85rem 1.25rem', background: '#064e3b', border: '1px solid #065f46', borderRadius: '10px', color: '#6ee7b7', display: 'flex', alignItems: 'center', gap: '0.6rem', fontSize: '0.875rem' }}>
-            <CheckCircle2 size={18} />
-            <span>{successMsg}</span>
-          </div>
+          <ToastNotification
+            message={successMsg}
+            type="success"
+            onClose={() => setSuccessMsg('')}
+          />
         )}
 
         {/* Main Content Area */}

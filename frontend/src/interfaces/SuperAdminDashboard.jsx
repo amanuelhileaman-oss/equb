@@ -5,6 +5,7 @@ import { useAuth } from '../context/AuthContext';
 import { useTheme } from '../context/ThemeContext';
 import { HeaderControls } from '../components/HeaderControls';
 import { NotificationCenter } from '../components/NotificationCenter';
+import { ToastNotification } from '../components/ToastNotification';
 import { processAvatarImage } from '../utils/imageHelper';
 import './SuperAdminDashboard.css';
 
@@ -1202,28 +1203,21 @@ export function SuperAdminDashboard() {
         {/* ------------------------------------------------------------------ */}
         <main className="admin-content-canvas">
 
-          {/* Toast Notification Banner */}
+          {/* Animated Movable Toast Notifications */}
           {successMessage && (
-            <div className="admin-toast-banner">
-              <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                <CheckCircle2 size={18} />
-                <span>{successMessage}</span>
-              </div>
-              <button
-                type="button"
-                onClick={() => setSuccessMessage('')}
-                style={{ background: 'transparent', border: 'none', cursor: 'pointer', color: '#166534' }}
-              >
-                <X size={16} />
-              </button>
-            </div>
+            <ToastNotification
+              message={successMessage}
+              type="success"
+              onClose={() => setSuccessMessage('')}
+            />
           )}
 
           {error && (
-            <div style={{ padding: '0.85rem 1.25rem', backgroundColor: '#fef2f2', border: '1px solid #fecaca', borderRadius: '8px', color: '#b91c1c', marginBottom: '1.25rem', display: 'flex', alignItems: 'center', gap: '0.65rem' }}>
-              <AlertCircle size={18} />
-              <span>{error}</span>
-            </div>
+            <ToastNotification
+              message={error}
+              type="error"
+              onClose={() => setError('')}
+            />
           )}
 
           {/* ================================================================ */}

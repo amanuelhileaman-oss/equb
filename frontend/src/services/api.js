@@ -73,6 +73,13 @@ async function request(endpoint, options = {}) {
     } else if (typeof data === 'string') {
       errorMsg = data;
     }
+
+    // Clean up technical messages into short, user-friendly notices
+    if (errorMsg.includes('CSRF') || errorMsg.includes('csrf')) {
+      errorMsg = 'Session refreshed. Please try signing in again.';
+    } else if (errorMsg.includes('Authentication credentials were not provided')) {
+      errorMsg = 'Please sign in to continue.';
+    }
     const error = new Error(errorMsg);
     error.status = response.status;
     error.data = data;
